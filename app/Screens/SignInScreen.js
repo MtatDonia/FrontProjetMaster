@@ -103,9 +103,6 @@ const SignInScreen = ({navigation}) => {
                       style={styles.logo}
                       source={logo}
                   />
-                  <View style={styles.logoTextContainer}>
-                      <AppText>Pick Your DOG!</AppText>
-                  </View>
               </View>
               <View style={styles.inputContainer}>
                   <View style={{marginBottom: 30}}>
