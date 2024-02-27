@@ -39,7 +39,7 @@ const TopBar = () => {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.navigate('ListingScreen')}>
-                <Image source={require('../assets/dog.png')} style={styles.logo} />
+                <Image source={require('../assets/nouveaulogo.png')} style={styles.logo} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.profile} onPress={handleGoProfile}>
                 <Image source={{uri: userPhoto}} style={styles.imageProfile}/>

@@ -9,7 +9,7 @@ const windowWidth = Dimensions.get('window').width;
 function WelcomeScreen({ navigation }) {
     const image = require('/app/assets/welcome-screen.jpg');
 
-    const logo = require('/app/assets/dog.png');
+    const logo = require('/app/assets/nouveaulogo.png');
     return (
 
         <ImageBackground source={image} style={styles.imageContainer}>

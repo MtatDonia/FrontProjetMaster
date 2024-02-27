@@ -15,7 +15,7 @@ const db = FIREBASE_DB;
 const LoginScreen = ({ navigation }) => {
   // Import Images
   const image = require('../assets/welcome-screen.jpg');;
-  const logo = require('../assets/dog.png');
+  const logo = require('../assets/nouveaulogo.png');
 
   // Import auth
   const auth = FIREBASE_AUTH;
