@@ -87,7 +87,7 @@ function ProfileScreen({ navigation }) {
         } catch (e) {
             console.error("Error adding document: ", e);
         }
-        finally{
+        finally {
             setLoading(false)
         }
         setModalVisible(!modalVisible);
@@ -120,13 +120,13 @@ function ProfileScreen({ navigation }) {
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
-            finally{
+            finally {
                 setLoading(false)
             }
             navigation.navigate('ListingScreen');
         } else {
             console.log('Veuillez remplir tous les champs');
-            
+
             alert('Veuillez remplir tous les champs');
             setLoading(false);
         }
@@ -168,70 +168,75 @@ function ProfileScreen({ navigation }) {
     const handleLogout = () => navigation.navigate('WelcomeScreen')
 
     return (
-        <ImageBackground source={image} style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             <TopBar />
             {loading ? (
                 <Loading />
             ) : (
-            <>
-            <View style={{ padding: 10 }}>
-                <View style={styles.userInfoContainer}>
-                    <View>
-                        <TouchableOpacity style={styles.icon} onPress={pickImageAsync}>
-                            <ImageViewer placeholderImageSource={{ uri: userPhoto }} selectedImage={selectedImage} style={{ width: 80, height: 80, borderRadius: 40 }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                                style={styles.savePhotoButton}
-                                onPress={handleUpload}
-                            >
-                                <Text style={{ fontSize: 25, color: 'gray' }}>{saveChangeButton}</Text>
-                        </TouchableOpacity>
+                <>
+                    <View style={{ padding: 10 }}>
+                        <View style={styles.userInfoContainer}>
+                            <View>
+                                <TouchableOpacity style={styles.icon} onPress={pickImageAsync}>
+                                    <ImageViewer placeholderImageSource={{ uri: userPhoto }} selectedImage={selectedImage} style={{ width: 80, height: 80, borderRadius: 40 }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.savePhotoButton}
+                                    onPress={handleUpload}
+                                >
+                                    <Text style={{ fontSize: 25, color: 'gray' }}>{saveChangeButton}</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[{marginTop: -50}, { marginLeft: 20 }]}>
+                                <Text style={{ fontSize: 24 }}>{name}</Text>
+                                <Text style={{ fontSize: 16 }}>{email}</Text>
+                                <Text style={{ fontSize: 25 }}>{boneCount}<MaterialCommunityIcons name="bone" size={45} color="pink" /></Text>
+                            </View>
+                        </View>
+
                     </View>
-                    <View style={{ marginLeft: 20 }}>
-                        <Text style={{ fontSize: 24 }}>{name}</Text>
-                        <Text style={{ fontSize: 16 }}>{email}</Text>
-                        <Text style={{ fontSize: 25 }}>{boneCount}<MaterialCommunityIcons name="bone" size={45} color="pink" /></Text>
+                    <View style={{ padding: 10 }}>
+                        <View style={styles.veterinaryInfo}>
+                            <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: 'bold' }}>My veterinary</Text>
+                            <View style={styles.listContainer}>
+                                <MaterialCommunityIcons name="account-circle" size={24} color="black" />
+                                <Text style={{ fontSize: 20, marginLeft: 20 }}>{veterinaryName}</Text>
+                            </View>
+                            <View style={styles.listContainer}>
+                                <MaterialCommunityIcons name="phone" size={24} color="black" />
+                                <Text onPress={() => Linking.openURL(`tel:${veterinaryPhone}`)} style={{ fontSize: 20, marginLeft: 20 }}>{veterinaryPhone}</Text>
+                            </View>
+                            <View style={styles.listContainer}>
+                                <MaterialCommunityIcons name="email" size={24} color="black" />
+                                <Text onPress={() => Linking.openURL(`mailto:${veterinaryEmail}`)} style={{ fontSize: 20, marginLeft: 20 }}>{veterinaryEmail}</Text>
+                            </View>
+                            <View style={{ alignContent: 'center', justifyContent: 'center' }}>
+                                <TouchableOpacity style={styles.editButton} onPress={() => setModalVisible(true)}>
+                                    <Text><MaterialCommunityIcons name="square-edit-outline" size={45} color="black" /></Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
-                </View>
-            </View>
-            <View style={{ padding: 10 }}>
-                <View style={styles.veterinaryInfo}>
-                    <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: 'bold' }}>My veterinary</Text>
-                    <View style={styles.listContainer}>
-                        <MaterialCommunityIcons name="account-circle" size={24} color="black" />
-                        <Text style={{ fontSize: 20, marginLeft: 20 }}>{veterinaryName}</Text>
-                    </View>
-                    <View style={styles.listContainer}>
-                        <MaterialCommunityIcons name="phone" size={24} color="black" />
-                        <Text onPress={() => Linking.openURL(`tel:${veterinaryPhone}`)} style={{ fontSize: 20, marginLeft: 20 }}>{veterinaryPhone}</Text>
-                    </View>
-                    <View style={styles.listContainer}>
-                        <MaterialCommunityIcons name="email" size={24} color="black" />
-                        <Text onPress={() => Linking.openURL(`mailto:${veterinaryEmail}`)} style={{ fontSize: 20, marginLeft: 20 }}>{veterinaryEmail}</Text>
-                    </View>
-                    <View style={{alignContent: 'center', justifyContent: 'center'}}>
-                        <TouchableOpacity style={styles.editButton} onPress={() => setModalVisible(true)}>
-                            <Text><MaterialCommunityIcons name="square-edit-outline" size={45} color="black" /></Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-            <TouchableOpacity
-                style={styles.logoutButton}
-                onPress={handleLogout}
-            >
-                <MaterialCommunityIcons name="logout" size={24} color="white" />
-            </TouchableOpacity>
-            </>
-        )}
+                    <TouchableOpacity
+                        style={styles.logoutButton}
+                        onPress={handleLogout}
+                    >
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <MaterialCommunityIcons name="logout" size={24} color="white" />
+                            <Text style={{ color: 'white', marginLeft: 10 }}>Logout</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                </>
+            )}
             <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                >
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <View style={{ marginBottom: 30, backgroundColor: colors.white, borderRadius: 15, padding: 5 }}>
@@ -266,7 +271,7 @@ function ProfileScreen({ navigation }) {
                     </View>
                 </View>
             </Modal>
-        </ImageBackground>
+        </View>
     );
 }
 
@@ -314,9 +319,9 @@ const styles = StyleSheet.create({
         width: '30%',
     },
     buttonChangeInfo: {
-    top: 50,
-    width: '100%',
-    alignItems: 'center',
+        top: 50,
+        width: '100%',
+        alignItems: 'center',
     },
     modalView: {
         margin: 20,
@@ -326,20 +331,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         shadowColor: colors.black,
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        
-      },
-      centeredView: {
+
+    },
+    centeredView: {
         flex: 1,
         justifyContent: 'center',
         marginTop: 22,
-      },
-      inputResetPwd: {
+    },
+    inputResetPwd: {
         backgroundColor: "white",
         borderColor: "gray",
         borderWidth: 1,
@@ -348,23 +353,37 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         bottom: 50,
         paddingHorizontal: 50,
-      },
-      veterinaryInfo: { 
-        backgroundColor: 'rgba(255, 255, 255, 0.6)',
-        borderRadius: 15, 
-        top: 15, 
-        alignContent: 'center', 
-        alignItems: 'center'
     },
-    userInfoContainer: { 
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', 
-        borderRadius: 15,  
-        width: '100%', 
+    veterinaryInfo: {
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        borderRadius: 15,
+        top: 15,
+        alignContent: 'center',
+        alignItems: 'center',
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    userInfoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        borderRadius: 15,
+        width: '100%',
         padding: 10,
         top: 15,
-    }
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    shadow: {
+        elevation: 5, 
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
 })
 
 export default ProfileScreen;
