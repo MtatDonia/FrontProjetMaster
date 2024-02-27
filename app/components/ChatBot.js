@@ -1,11 +1,11 @@
-import {View, Image} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import { GiftedChat } from 'react-native-gifted-chat'
+import { View, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'
 import axios from 'axios';
 import colors from '../config/colors';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { collection, query, where, getDocs} from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { FIREBASE_DB } from '../../FirebaseConfig';
 
 const db = FIREBASE_DB;
@@ -39,7 +39,7 @@ const ChatBot = () => {
     const chatGptApiKey = '';
 
     const handleSend = async (newMessage = []) => {
-        try{
+        try {
             const userMessage = newMessage[0];
 
             setMessages(previousMessages => GiftedChat.append(previousMessages, userMessage));
@@ -53,11 +53,12 @@ const ChatBot = () => {
                     user: {
                         _id: 2,
                         name: 'Doggy Bot',
-                        avatar: 'https://cdn.discordapp.com/attachments/763467509759475813/1185245997832618075/logo.png?ex=658ee95a&is=657c745a&hm=0fd9cfad820d82929d30812c7729db921bafa709a1a35e87a2278f89b120a978&',
+                        avatar: 'https://cdn.discordapp.com/attachments/763467509759475813/1211970855975002122/icon_chat_bot.jpg?ex=65f022d1&is=65ddadd1&hm=469c607851a9ab4e772587252b3d5fd26d09a910ce64638623ec598e07f1c77f&',
+                        color: colors.purple
                     }
                 };
                 setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
-                return ;
+                return;
             }
 
             const response = await axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions', {
@@ -81,8 +82,8 @@ const ChatBot = () => {
                 user: {
                     _id: 2,
                     name: 'Doggy Bot',
-                    avatar: 'https://cdn.discordapp.com/attachments/763467509759475813/1185245997832618075/logo.png?ex=658ee95a&is=657c745a&hm=0fd9cfad820d82929d30812c7729db921bafa709a1a35e87a2278f89b120a978&',
-                }   
+                    avatar: 'https://cdn.discordapp.com/attachments/763467509759475813/1211970855975002122/icon_chat_bot.jpg?ex=65f022d1&is=65ddadd1&hm=469c607851a9ab4e772587252b3d5fd26d09a910ce64638623ec598e07f1c77f&',
+                }
             };
 
             setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
@@ -91,20 +92,30 @@ const ChatBot = () => {
         }
     };
 
-    
+
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ backgroundColor: colors.purple, padding: 10, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, marginBottom: 5}}>
-                <Image source={{uri: image}} style={{width: 150, height: 150}} />
-            </View>            
-            <GiftedChat 
+            <GiftedChat
                 messages={messages}
                 onSend={newMessage => handleSend(newMessage)}
-                user={{ 
+                user={{
                     _id: 1,
                     avatar: userPhoto
                 }}
+                renderBubble={props => (
+                    <Bubble
+                        {...props}
+                        wrapperStyle={{
+                            right: {
+                                backgroundColor: colors.purple
+                            },
+                            left: {
+                                backgroundColor: colors.white
+                            }
+                        }}
+                    />
+                )} 
             />
         </View>
     )
